@@ -14,7 +14,7 @@ class PresentationController: UIPresentationController {
     
     override func frameOfPresentedViewInContainerView() -> CGRect {
         let x: CGFloat = 0.0
-        let y: CGFloat = 40
+        let y: CGFloat = 100
         let width = containerView!.frame.width
         let height = containerView!.frame.height - y
         let rect = CGRect(x: x, y: y, width: width, height: height)
@@ -22,23 +22,22 @@ class PresentationController: UIPresentationController {
     }
     
     override func presentationTransitionWillBegin() {
-        dimmingView.frame = containerView!.frame
+        dimmingView.frame = UIScreen.mainScreen().bounds
         dimmingView.backgroundColor = .blackColor()
         dimmingView.alpha = 0.0
-        dimmingView.addSubview(presentedViewController.view)
         containerView?.addSubview(dimmingView)
-        
-        UIView.animateWithDuration(0.3) {
+
+        self.presentingViewController.transitionCoordinator()?.animateAlongsideTransition({ _ in
             self.dimmingView.alpha = 0.5
-        }
+        }, completion: nil)
     }
     
     override func dismissalTransitionWillBegin() {
-        UIView.animateWithDuration(0.3, animations: {
+        self.presentingViewController.transitionCoordinator()?.animateAlongsideTransition({ _ in
             self.dimmingView.alpha = 0.0
-        }) { completed in
+        }, completion: { _ in
             self.dimmingView.removeFromSuperview()
-        }
+        })
     }
     
 }

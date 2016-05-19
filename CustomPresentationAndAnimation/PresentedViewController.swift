@@ -19,15 +19,20 @@ class PresentedViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .redColor()
-        
-        let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("Hide", forState: .Normal)
-        button.addTarget(self, action: #selector(hideButtonTapped(_:)), forControlEvents: .TouchUpInside)
-        view.addSubview(button)
-        
-        NSLayoutConstraint(item: button, attribute: .Top, relatedBy: .Equal, toItem: view, attribute: .TopMargin, multiplier: 1.0, constant: 0.0).active = true
-        NSLayoutConstraint(item: button, attribute: .CenterX, relatedBy: .Equal, toItem: view, attribute: .CenterX, multiplier: 1.0, constant: 0.0).active = true
+
+        func setupButton() {
+            let button = UIButton()
+            button.translatesAutoresizingMaskIntoConstraints = false
+            button.setTitle("Hide", forState: .Normal)
+            button.addTarget(self, action: #selector(hideButtonTapped(_:)), forControlEvents: .TouchUpInside)
+            view.addSubview(button)
+            
+            NSLayoutConstraint(item: button, attribute: .Top, relatedBy: .Equal, toItem: view, attribute: .TopMargin, multiplier: 1.0, constant: 0.0).active = true
+            NSLayoutConstraint(item: button, attribute: .CenterX, relatedBy: .Equal, toItem: view, attribute: .CenterX, multiplier: 1.0, constant: 0.0).active = true
+            
+        }
+        setupButton()
+
     }
     
     func hideButtonTapped(sender: UIButton) {
