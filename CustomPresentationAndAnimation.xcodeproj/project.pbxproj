@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4E6D15441CEFE6D000C383B2 /* AnimatedTransitioning.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E6D15431CEFE6D000C383B2 /* AnimatedTransitioning.swift */; };
+		4E6D15461CF004CF00C383B2 /* PresentedViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E6D15451CF004CE00C383B2 /* PresentedViewControllerDelegate.swift */; };
+		4E6D15481CF0055000C383B2 /* PushedViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E6D15471CF0055000C383B2 /* PushedViewControllerDelegate.swift */; };
+		4E75CFE41CEFE0C80015B4AE /* PushedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E75CFE31CEFE0C80015B4AE /* PushedViewController.swift */; };
 		4E8623431CEB9980006F5BE0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E8623421CEB9980006F5BE0 /* AppDelegate.swift */; };
 		4E8623451CEB9980006F5BE0 /* PresentingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E8623441CEB9980006F5BE0 /* PresentingViewController.swift */; };
 		4E8623481CEB9980006F5BE0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4E8623461CEB9980006F5BE0 /* Main.storyboard */; };
@@ -17,6 +21,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4E6D15431CEFE6D000C383B2 /* AnimatedTransitioning.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimatedTransitioning.swift; sourceTree = "<group>"; };
+		4E6D15451CF004CE00C383B2 /* PresentedViewControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PresentedViewControllerDelegate.swift; sourceTree = "<group>"; };
+		4E6D15471CF0055000C383B2 /* PushedViewControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PushedViewControllerDelegate.swift; sourceTree = "<group>"; };
+		4E75CFE31CEFE0C80015B4AE /* PushedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PushedViewController.swift; sourceTree = "<group>"; };
 		4E86233F1CEB997F006F5BE0 /* CustomPresentationAndAnimation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CustomPresentationAndAnimation.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4E8623421CEB9980006F5BE0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4E8623441CEB9980006F5BE0 /* PresentingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentingViewController.swift; sourceTree = "<group>"; };
@@ -58,9 +66,13 @@
 		4E8623411CEB9980006F5BE0 /* CustomPresentationAndAnimation */ = {
 			isa = PBXGroup;
 			children = (
+				4E6D15431CEFE6D000C383B2 /* AnimatedTransitioning.swift */,
 				4E8623561CEBAB65006F5BE0 /* PresentationController.swift */,
 				4E8623541CEB9A65006F5BE0 /* PresentedViewController.swift */,
+				4E6D15451CF004CE00C383B2 /* PresentedViewControllerDelegate.swift */,
 				4E8623441CEB9980006F5BE0 /* PresentingViewController.swift */,
+				4E75CFE31CEFE0C80015B4AE /* PushedViewController.swift */,
+				4E6D15471CF0055000C383B2 /* PushedViewControllerDelegate.swift */,
 				4E8623461CEB9980006F5BE0 /* Main.storyboard */,
 				4E8623581CEBAB98006F5BE0 /* Supporting Files */,
 			);
@@ -149,9 +161,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4E6D15481CF0055000C383B2 /* PushedViewControllerDelegate.swift in Sources */,
 				4E8623451CEB9980006F5BE0 /* PresentingViewController.swift in Sources */,
 				4E8623431CEB9980006F5BE0 /* AppDelegate.swift in Sources */,
+				4E6D15441CEFE6D000C383B2 /* AnimatedTransitioning.swift in Sources */,
 				4E8623551CEB9A65006F5BE0 /* PresentedViewController.swift in Sources */,
+				4E6D15461CF004CF00C383B2 /* PresentedViewControllerDelegate.swift in Sources */,
+				4E75CFE41CEFE0C80015B4AE /* PushedViewController.swift in Sources */,
 				4E8623571CEBAB65006F5BE0 /* PresentationController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -304,6 +320,7 @@
 				4E8623531CEB9980006F5BE0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

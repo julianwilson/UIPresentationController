@@ -12,10 +12,14 @@ class PresentingViewController: UIViewController {
     
     @IBAction func actionButtonTapped(sender: UIButton) {
         let presentedViewController = PresentedViewController()
-        presentedViewController.modalPresentationStyle = .Custom
-        presentedViewController.transitioningDelegate = presentedViewController
         presentedViewController.delegate = self
-        presentViewController(presentedViewController, animated: true, completion: nil)
+
+        let navigationController = UINavigationController(rootViewController: presentedViewController)
+        navigationController.modalPresentationStyle = .Custom
+        navigationController.transitioningDelegate = presentedViewController
+        navigationController.delegate = presentedViewController
+        navigationController.setNavigationBarHidden(true, animated: false)
+        presentViewController(navigationController, animated: true, completion: nil)
     }
     
 }

@@ -8,10 +8,6 @@
 
 import UIKit
 
-protocol PresentedViewControllerDelegate: class {
-    func dismiss()
-}
-
 class PresentedViewController: UIViewController {
 
     weak var delegate: PresentedViewControllerDelegate?
@@ -19,24 +15,43 @@ class PresentedViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .redColor()
+        view.alpha = 0.5
 
-        func setupButton() {
-            let button = UIButton()
-            button.translatesAutoresizingMaskIntoConstraints = false
-            button.setTitle("Hide", forState: .Normal)
-            button.addTarget(self, action: #selector(hideButtonTapped(_:)), forControlEvents: .TouchUpInside)
-            view.addSubview(button)
+        let hideButton = UIButton()
+        let pushbutton = UIButton()
+
+        func setupHideButton() {
+            hideButton.translatesAutoresizingMaskIntoConstraints = false
+            hideButton.setTitle("Hide", forState: .Normal)
+            hideButton.addTarget(self, action: #selector(hideButtonTapped(_:)), forControlEvents: .TouchUpInside)
+            view.addSubview(hideButton)
             
-            NSLayoutConstraint(item: button, attribute: .Top, relatedBy: .Equal, toItem: view, attribute: .TopMargin, multiplier: 1.0, constant: 0.0).active = true
-            NSLayoutConstraint(item: button, attribute: .CenterX, relatedBy: .Equal, toItem: view, attribute: .CenterX, multiplier: 1.0, constant: 0.0).active = true
+            NSLayoutConstraint(item: hideButton, attribute: .CenterY, relatedBy: .Equal, toItem: view, attribute: .CenterY, multiplier: 1.0, constant: 0.0).active = true
+            NSLayoutConstraint(item: hideButton, attribute: .CenterX, relatedBy: .Equal, toItem: view, attribute: .CenterX, multiplier: 1.0, constant: 0.0).active = true
             
         }
-        setupButton()
+        func setupPushButton() {
+            pushbutton.translatesAutoresizingMaskIntoConstraints = false
+            pushbutton.setTitle("Push", forState: .Normal)
+            pushbutton.addTarget(self, action: #selector(pushButtonTapped(_:)), forControlEvents: .TouchUpInside)
+            view.addSubview(pushbutton)
+            
+            NSLayoutConstraint(item: pushbutton, attribute: .Top, relatedBy: .Equal, toItem: hideButton, attribute: .Bottom, multiplier: 1.0, constant: 0.0).active = true
+            NSLayoutConstraint(item: pushbutton, attribute: .CenterX, relatedBy: .Equal, toItem: view, attribute: .CenterX, multiplier: 1.0, constant: 0.0).active = true
+        }
+        setupHideButton()
+        setupPushButton()
 
     }
     
     func hideButtonTapped(sender: UIButton) {
         delegate?.dismiss()
+    }
+    
+    func pushButtonTapped(sender: UIButton) {
+        let pushedViewController = PushedViewController()
+        pushedViewController.delegate = self
+        navigationController?.pushViewController(pushedViewController, animated: true)
     }
     
 }
@@ -49,10 +64,22 @@ extension PresentedViewController: UIViewControllerTransitioningDelegate {
 
 }
 
+extension PresentedViewController: UINavigationControllerDelegate {
+    
+    func navigationController(navigationController: UINavigationController, animationControllerForOperation operation: UINavigationControllerOperation, fromViewController fromVC: UIViewController, toViewController toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        let animatedTransitioning = AnimatedTransitioning()
+        animatedTransitioning.operation = operation
+        return animatedTransitioning
+    }
+    
+}
 
-
-
-
+extension PresentedViewController: PushedViewControllerDelegate {
+    
+    func pop() {
+        navigationController?.popViewControllerAnimated(true)
+    }
+}
 
 
 
