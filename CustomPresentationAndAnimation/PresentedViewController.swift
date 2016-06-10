@@ -9,6 +9,9 @@
 import UIKit
 
 class PresentedViewController: UIViewController {
+    
+    var animatedTrans = AnimatedTransitioning()
+    let swipeInteractionController = SwipeInteractionController()
 
     weak var delegate: PresentedViewControllerDelegate?
     
@@ -41,7 +44,8 @@ class PresentedViewController: UIViewController {
         }
         setupHideButton()
         setupPushButton()
-
+        
+        swipeInteractionController.wireToViewController(self)
     }
     
     func hideButtonTapped(sender: UIButton) {
@@ -61,15 +65,31 @@ extension PresentedViewController: UIViewControllerTransitioningDelegate {
     func presentationControllerForPresentedViewController(presented: UIViewController, presentingViewController presenting: UIViewController, sourceViewController source: UIViewController) -> UIPresentationController? {
         return PresentationController(presentedViewController: presented, presentingViewController: presenting)
     }
+    
+    func animationControllerForPresentedController(presented: UIViewController, presentingController presenting: UIViewController, sourceController source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        animatedTrans.isPresenting = true
+        animatedTrans.operation = .None
+        return animatedTrans
+    }
+    
+    func animationControllerForDismissedController(dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        animatedTrans.isPresenting = false
+        animatedTrans.operation = .None
+        return animatedTrans
+    }
+    
+    func interactionControllerForDismissal(animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
+        return swipeInteractionController.interactionInProgress ? swipeInteractionController : nil
+    }
 
 }
 
 extension PresentedViewController: UINavigationControllerDelegate {
     
     func navigationController(navigationController: UINavigationController, animationControllerForOperation operation: UINavigationControllerOperation, fromViewController fromVC: UIViewController, toViewController toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        let animatedTransitioning = AnimatedTransitioning()
-        animatedTransitioning.operation = operation
-        return animatedTransitioning
+        animatedTrans.isPresenting = true
+        animatedTrans.operation = operation
+        return animatedTrans
     }
     
 }

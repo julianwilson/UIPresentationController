@@ -10,6 +10,7 @@ import UIKit
 
 class AnimatedTransitioning: NSObject, UIViewControllerAnimatedTransitioning {
     
+    var isPresenting = false
     internal var operation: UINavigationControllerOperation = .None
     
     func transitionDuration(transitionContext: UIViewControllerContextTransitioning?) -> NSTimeInterval {
@@ -17,26 +18,33 @@ class AnimatedTransitioning: NSObject, UIViewControllerAnimatedTransitioning {
     }
     
     func animateTransition(transitionContext: UIViewControllerContextTransitioning) {
+//        print("animateTransition")
         guard let container = transitionContext.containerView()
-        , fromViewController = transitionContext.viewControllerForKey(UITransitionContextFromViewControllerKey)
-        , toViewController = transitionContext.viewControllerForKey(UITransitionContextToViewControllerKey)
-        , fromView = transitionContext.viewForKey(UITransitionContextFromViewKey)
-        , toView = transitionContext.viewForKey(UITransitionContextToViewKey)
+        , fromView = transitionContext.viewControllerForKey(UITransitionContextFromViewControllerKey)
+        , toView = transitionContext.viewControllerForKey(UITransitionContextToViewControllerKey)
         
         else { return }
         
         let containerFrame = container.frame
-        var fromViewStartFrame = transitionContext.initialFrameForViewController(fromViewController)
-        var toViewStartFrame = transitionContext.initialFrameForViewController(toViewController)
-        let toViewFinalFrame = transitionContext.finalFrameForViewController(toViewController)
-        var fromViewFinalFrame = transitionContext.finalFrameForViewController(fromViewController)
+        var fromViewStartFrame = transitionContext.initialFrameForViewController(fromView)
+        var toViewStartFrame = transitionContext.initialFrameForViewController(toView)
+        let toViewFinalFrame = transitionContext.finalFrameForViewController(toView)
+        var fromViewFinalFrame = transitionContext.finalFrameForViewController(fromView)
+        
+//        print("isPresenting: \(isPresenting)")
+//        print("fromView")
+//        print(fromView)
+//        print("toView")
+//        print(toView)
         
         fromViewStartFrame = containerFrame
         fromViewFinalFrame.size.width = containerFrame.width
         fromViewFinalFrame.size.height = containerFrame.height
+        fromViewFinalFrame.origin.x = isPresenting ? 0 : -containerFrame.width
         
         toViewStartFrame.size.width = containerFrame.width
         toViewStartFrame.size.height = containerFrame.height
+        toViewStartFrame.origin.x = isPresenting ? -containerFrame.width : 0
         toViewStartFrame.origin.y = 0
 
         if operation == .Push {
@@ -47,19 +55,28 @@ class AnimatedTransitioning: NSObject, UIViewControllerAnimatedTransitioning {
             fromViewFinalFrame.origin.x += containerFrame.width
         }
         
-        container.addSubview(fromView)
-        container.addSubview(toView)
-        fromView.frame = fromViewStartFrame
-        toView.frame = toViewStartFrame
+        if isPresenting {
+            fromView.view.frame = fromViewStartFrame
+        }
+        toView.view.frame = toViewStartFrame
+        
+        if isPresenting {
+            container.addSubview(toView.view)
+        }
+        
+//        print("fromViewFinalFrame")
+//        print(fromViewFinalFrame)
+//        print("toViewFinalFrame")
+//        print(toViewFinalFrame)
 
         UIView.animateWithDuration(transitionDuration(transitionContext), animations: {
-            fromView.frame = fromViewFinalFrame
-            toView.frame = toViewFinalFrame
+            fromView.view.frame = fromViewFinalFrame
+            toView.view.frame = toViewFinalFrame
         }) { completed in
             if completed {
-                transitionContext.completeTransition(completed)
+                transitionContext.completeTransition(!transitionContext.transitionWasCancelled())
                 if self.operation == .Pop {
-                    fromView.removeFromSuperview()
+                    fromView.view.removeFromSuperview()
                 }
             }
         }
